@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love - Pabasara Nethmini</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+        
+        h1 {
+            color: #ff4b6e;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .option-btn {
+            padding: 15px 10px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(to bottom right, #ff758c, #ff7eb3);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+        }
+        
+        #love-message {
+            display: none;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        #fail-message {
+            display: none;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .love-content {
+            margin-top: 20px;
+        }
+        
+        .heart-animation, .flower-animation, .love-words-animation {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .heart, .flower {
+            position: absolute;
+            animation: falling linear infinite;
+            opacity: 0;
+        }
+        
+        .love-word {
+            position: absolute;
+            font-size: 24px;
+            color: #ff3366;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-weight: bold;
+            animation: fallingWord linear forwards;
+            opacity: 0;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes falling {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fallingWord {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .love-heart {
+            color: #ff4b6e;
+            font-size: 6rem;
+            margin: 30px 0;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .rainbow-text {
+            background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: bold;
+            font-size: 2.5rem;
+            padding: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: left; }
+            100% { background-position: right; }
+        }
+        
+        .creator {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: #ff4b6e;
+            opacity: 0.7;
+        }
+
+        #question {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .back-btn, .show-love-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff4b6e;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .show-love-btn {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            margin-top: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        .back-btn:hover, .show-love-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .back-btn:active, .show-love-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .glow {
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff4b6e, 0 0 20px #ff4b6e;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #ff4b6e, 0 0 30px #ff4b6e, 0 0 40px #ff4b6e;
+            }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 0 10px 2px gold;
+            animation: sparkle 2s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="question">
+            <h1>ඔබේ ප්‍රියතම ආහාරය මොකක්ද?</h1>
+            <div class="options">
+                <button class="option-btn" onclick="checkAnswer('pizza')">1. පිට්සා</button>
+                <button class="option-btn" onclick="checkAnswer('kottu')">2. කොත්තු</button>
+                <button class="option-btn" onclick="checkAnswer('icecream')">3. අයිස්ක්‍රීම්</button>
+                <button class="option-btn" onclick="checkAnswer('rice')">4. සහල්</button>
+            </div>
+        </div>
+        
+        <div id="love-message">
+            <h1 class="glow">I Love You Pabasara Nethmini ❤️</h1>
+            <div class="love-content">
+                <div class="love-heart floating">❤️</div>
+                <p class="rainbow-text">ඔබ මගේ හිතේ මහා ප්‍රේමය යි</p>
+            </div>
+            <button class="show-love-btn" onclick="showLoveWords()">මෙතන ක්ලික් කරන්න</button>
+            <button class="back-btn" onclick="goBack()">ආපසු යන්න</button>
+        </div>
+        
+        <div id="fail-message">
+            <h1>Fail!</h1>
+            <p>වැරදි පිළිතුරක්! නැවත උත්සාහ කරන්න.</p>
+            <button class="back-btn" onclick="goBack()">නැවත උත්සාහ කරන්න</button>
+        </div>
+    </div>
+    
+    <div class="heart-animation" id="heart-container"></div>
+    <div class="flower-animation" id="flower-container"></div>
+    <div class="love-words-animation" id="love-words-container"></div>
+    
+    <div class="creator">Made with love by Kaveesha</div>
+    
+    <script>
+        // ආදර වදන් 7ක් - 7 love phrases in Sinhala
+        const loveWords = [
+            "ඔබේ සිනහව මගේ ලෝකයයි ❤️",
+            "මගේ හිත ඔබ වෙනුවෙන් ගැහෙනවා ❤️",
+            "ඔබ නැතුව මට ජීවත් වෙන්න බෑ ❤️",
+            "ඔබ මගේ ජීවිතයේ ආලෝකයයි ❤️",
+            "හැමදාම ඔබව ආදරෙන් ආරක්ෂා කරනවා ❤️",
+            "මගේ හද ගැස්ම ඔබයි ❤️",
+            "ඔබ වෙනුවෙන් මගේ ආදරය අනන්තයි ❤️"
+        ];
+        
+        let currentWordIndex = 0;
+        
+        function checkAnswer(answer) {
+            document.getElementById('question').style.display = 'none';
+            
+            if (answer === 'icecream') {
+                document.getElementById('love-message').style.display = 'block';
+                createHearts();
+                createFlowers();
+                createSparkles();
+            } else {
+                document.getElementById('fail-message').style.display = 'block';
+            }
+        }
+        
+        function goBack() {
+            document.getElementById('love-message').style.display = 'none';
+            document.getElementById('fail-message').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+            
+            // Clear animations
+            document.getElementById('heart-container').innerHTML = '';
+            document.getElementById('flower-container').innerHTML = '';
+            document.getElementById('love-words-container').innerHTML = '';
+        }
+        
+        function createHearts() {
+            const container = document.getElementById('heart-container');
+            const heartCount = 60;
+            
+            for (let i = 0; i < heartCount; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = Math.random() * (40 - 15) + 15 + 'px';
+                    heart.style.animationDuration = Math.random() * (15 - 5) + 5 + 's';
+                    container.appendChild(heart);
+                    
+                    // Remove heart after animation
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 15000);
+                }, i * 150);
+            }
+        }
+        
+        function createFlowers() {
+            const container = document.getElementById('flower-container');
+            const flowerCount = 50;
+            const flowerTypes = ['🌹', '🌸', '💐', '🌷', '🌺', '💮', '🏵️'];
+            
+            for (let i = 0; i < flowerCount; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.classList.add('flower');
+                    flower.innerHTML = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+                    flower.style.left = Math.random() * 100 + '%';
+                    flower.style.fontSize = Math.random() * (40 - 15) + 15 + 'px';
+                    flower.style.animationDuration = Math.random() * (15 - 5) + 5 + 's';
+                    container.appendChild(flower);
+                    
+                    // Remove flower after animation
+                    setTimeout(() => {
+                        flower.remove();
+                    }, 15000);
+                }, i * 200);
+            }
+        }
+        
+        function showLoveWords() {
+            const container = document.getElementById('love-words-container');
+            
+            // Get next love word, rotate through the list
+            const loveWord = loveWords[currentWordIndex];
+            currentWordIndex = (currentWordIndex + 1) % loveWords.length;
+            
+            const wordElement = document.createElement('div');
+            wordElement.classList.add('love-word');
+            wordElement.innerHTML = loveWord;
+            wordElement.style.left = Math.random() * 70 + 15 + '%'; // Random position but not too far to the edges
+            wordElement.style.animationDuration = '8s'; // Enough time to read
+            container.appendChild(wordElement);
+            
+            // Remove word after animation
+            setTimeout(() => {
+                wordElement.remove();
+            }, 8000);
+            
+            // Add more hearts and flowers too
+            createMoreHearts();
+            createMoreFlowers();
+        }
+        
+        function createMoreHearts() {
+            const container = document.getElementById('heart-container');
+            const heartCount = 20;
+            
+            for (let i = 0; i < heartCount; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = Math.random() * (30 - 15) + 15 + 'px';
+                    heart.style.animationDuration = Math.random() * (10 - 3) + 3 + 's';
+                    container.appendChild(heart);
+                    
+                    // Remove heart after animation
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 10000);
+                }, i * 100);
+            }
+        }
+        
+        function createMoreFlowers() {
+            const container = document.getElementById('flower-container');
+            const flowerCount = 15;
+            const flowerTypes = ['🌹', '🌸', '💐', '🌷', '🌺', '💮', '🏵️'];
+            
+            for (let i = 0; i < flowerCount; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.classList.add('flower');
+                    flower.innerHTML = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+                    flower.style.left = Math.random() * 100 + '%';
+                    flower.style.fontSize = Math.random() * (30 - 15) + 15 + 'px';
+                    flower.style.animationDuration = Math.random() * (10 - 3) + 3 + 's';
+                    container.appendChild(flower);
+                    
+                    // Remove flower after animation
+                    setTimeout(() => {
+                        flower.remove();
+                    }, 10000);
+                }, i * 150);
+            }
+        }
+        
+        function createSparkles() {
+            const container = document.querySelector('.container');
+            const sparkleCount = 30;
+            
+            for (let i = 0; i < sparkleCount; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.classList.add('sparkle');
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = Math.random() * 100 + '%';
+                    sparkle.style.animationDuration = Math.random() * (3 - 1) + 1 + 's';
+                    container.appendChild(sparkle);
+                    
+                    // Remove sparkle after animation
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, 3000);
+                }, i * 200);
+            }
+        }
+    </script>
+</body>
+</html>
